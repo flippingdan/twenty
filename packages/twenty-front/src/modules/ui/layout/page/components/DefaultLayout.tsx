@@ -47,12 +47,9 @@ const StyledPageContainer = styled.div`
   min-width: 0;
 `;
 
-const StyledNavigationDrawerWrapper = styled.div`
-  flex-shrink: 0;
-  background: #2A2A2A;
-`;
-
-const SIDEBAR_CSS_VARS = {
+const SIDEBAR_CSS_VARS: React.CSSProperties = {
+  flexShrink: 0,
+  background: '#2A2A2A',
   '--t-font-color-primary': '#E8E0D4',
   '--t-font-color-secondary': '#C4B8A8',
   '--t-font-color-tertiary': 'rgba(196, 184, 168, 0.6)',
@@ -64,7 +61,7 @@ const SIDEBAR_CSS_VARS = {
   '--t-border-color-medium': 'rgba(255, 255, 255, 0.12)',
   '--t-border-color-strong': 'rgba(255, 255, 255, 0.2)',
   '--t-border-color-light': 'rgba(255, 255, 255, 0.06)',
-} as React.CSSProperties;
+};
 
 const StyledMainContainer = styled.div`
   display: flex;
@@ -89,13 +86,13 @@ export const DefaultLayout = () => {
               <PageDragDropProvider>
                 {!showAuthModal && <KeyboardShortcutMenu />}
                 {showAuthModal ? (
-                  <StyledNavigationDrawerWrapper style={SIDEBAR_CSS_VARS}>
+                  <div style={SIDEBAR_CSS_VARS}>
                     <BackgroundMockNavigationDrawer />
-                  </StyledNavigationDrawerWrapper>
+                  </div>
                 ) : useShowFullScreen ? null : (
-                  <StyledNavigationDrawerWrapper style={SIDEBAR_CSS_VARS}>
+                  <div style={SIDEBAR_CSS_VARS}>
                     <AppNavigationDrawer />
-                  </StyledNavigationDrawerWrapper>
+                  </div>
                 )}
                 {showAuthModal ? (
                   <>
