@@ -27,10 +27,18 @@ jobs:
           file: packages/twenty-docker/twenty/Dockerfile
           target: twenty
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/twenty:latest
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/twenty:latest
+            ghcr.io/${{ github.repository_owner }}/twenty:${{ github.sha }}
 
-      - name: Trigger Railway redeploy
+      - name: Update Railway image and redeploy
         run: |
+          IMAGE="ghcr.io/${{ github.repository_owner }}/twenty:${{ github.sha }}"
+          curl -s -X POST https://backboard.railway.app/graphql/v2 \
+            -H "Authorization: Bearer ${{ secrets.RAILWAY_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"query\":\"mutation { serviceInstanceUpdate(environmentId: \\\"4a36bebe-1857-466f-b597-c6be3c43870a\\\", serviceId: \\\"1db37d19-c1a4-4145-ba84-f30a7c86219a\\\", input: { source: { image: \\\"$IMAGE\\\" } }) }\"}"
+          sleep 3
           curl -s -X POST https://backboard.railway.app/graphql/v2 \
             -H "Authorization: Bearer ${{ secrets.RAILWAY_TOKEN }}" \
             -H "Content-Type: application/json" \
