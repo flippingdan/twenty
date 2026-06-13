@@ -54,6 +54,7 @@ const StyledNavigationDrawerWrapper = styled.div`
   --t-font-color-secondary: #C4B8A8;
   --t-font-color-tertiary: rgba(196, 184, 168, 0.6);
   --t-font-color-light: rgba(196, 184, 168, 0.4);
+  --t-font-color-extra-light: rgba(196, 184, 168, 0.25);
   --t-background-transparent-light: rgba(255, 255, 255, 0.08);
   --t-background-transparent-lighter: rgba(255, 255, 255, 0.04);
   --t-background-tertiary: rgba(255, 255, 255, 0.12);
