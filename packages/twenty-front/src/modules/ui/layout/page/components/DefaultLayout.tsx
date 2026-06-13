@@ -50,6 +50,8 @@ const StyledPageContainer = styled.div`
 const SIDEBAR_CSS_VARS: CSSProperties = {
   flexShrink: 0,
   background: '#2A2A2A',
+  '--t-background-primary': '#2A2A2A',
+  '--t-background-secondary': '#2A2A2A',
   '--t-font-color-primary': '#E8E0D4',
   '--t-font-color-secondary': '#C4B8A8',
   '--t-font-color-tertiary': 'rgba(196, 184, 168, 0.6)',
