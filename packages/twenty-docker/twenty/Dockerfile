@@ -50,7 +50,7 @@ RUN npx nx run twenty-server:lingui:extract && \
     npx nx run twenty-emails:lingui:extract && \
     npx nx run twenty-emails:lingui:compile
 
-RUN npx nx run twenty-server:build
+RUN NX_DAEMON=false NODE_OPTIONS="--max-old-space-size=4096" npx nx run twenty-server:build
 
 # Clean server build output (type declarations and compiled tests are not needed at runtime;
 # source maps are kept because twenty-infra extracts them from the image for Sentry uploads)
@@ -77,7 +77,7 @@ RUN npx nx run twenty-front:lingui:extract || true && \
 RUN if [ -d /app/packages/twenty-front/build ]; then \
       echo "Using pre-built frontend from host"; \
     else \
-      NODE_OPTIONS="--max-old-space-size=8192" npx nx build twenty-front; \
+      NX_DAEMON=false NODE_OPTIONS="--max-old-space-size=7168" npx nx run twenty-front:build; \
     fi
 
 
@@ -92,11 +92,11 @@ FROM node:24.16.0-alpine3.23@sha256:2bdb65ed1dab192432bc31c95f94155ca5ad7fc1392f
 # 3.5.7-r0). Node bundles its own OpenSSL, but psql/curl link these system
 # libs, so the upgrade hardens runtime TLS and clears the scanner.
 RUN apk add --no-cache \
-    'curl>=8.19.0-r0' \
-    'nghttp2-libs>=1.69.0-r0' \
-    'libcrypto3>=3.5.7-r0' \
-    'libssl3>=3.5.7-r0' \
-    'postgresql18-client>=18.4-r0' \
+    curl \
+    libnghttp2 \
+    libcrypto3 \
+    libssl3 \
+    postgresql18-client \
     jq
 
 COPY ./packages/twenty-docker/twenty/entrypoint.sh /app/entrypoint.sh
@@ -230,8 +230,8 @@ RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz \
 RUN apk add --no-cache \
     postgresql18 postgresql18-contrib \
     redis \
-    'libcrypto3>=3.5.7-r0' \
-    'libssl3>=3.5.7-r0' \
+    libcrypto3 \
+    libssl3 \
     curl jq su-exec
 
 # Workspace root config
