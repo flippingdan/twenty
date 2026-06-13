@@ -31,15 +31,20 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/twenty:latest
             ghcr.io/${{ github.repository_owner }}/twenty:${{ github.sha }}
 
-      - name: Update Railway image and redeploy
+      - name: Deploy to Railway
         run: |
-          IMAGE="ghcr.io/${{ github.repository_owner }}/twenty:${{ github.sha }}"
-          curl -s -X POST https://backboard.railway.app/graphql/v2 \
+          echo "Fetching Railway project ID..."
+          PROJECT_RESPONSE=$(curl -s -X POST https://backboard.railway.app/graphql/v2 \
             -H "Authorization: Bearer ${{ secrets.RAILWAY_TOKEN }}" \
             -H "Content-Type: application/json" \
-            -d "{\"query\":\"mutation { serviceInstanceUpdate(environmentId: \\\"4a36bebe-1857-466f-b597-c6be3c43870a\\\", serviceId: \\\"1db37d19-c1a4-4145-ba84-f30a7c86219a\\\", input: { source: { image: \\\"$IMAGE\\\" } }) }\"}"
-          sleep 3
-          curl -s -X POST https://backboard.railway.app/graphql/v2 \
+            -d '{"query":"{ service(id: \"1db37d19-c1a4-4145-ba84-f30a7c86219a\") { projectId } }"}')
+          echo "Service response: $PROJECT_RESPONSE"
+          PROJECT_ID=$(echo "$PROJECT_RESPONSE" | jq -r '.data.service.projectId')
+          echo "Project ID: $PROJECT_ID"
+
+          echo "Triggering fresh Railway deployment..."
+          DEPLOY_RESPONSE=$(curl -s -X POST https://backboard.railway.app/graphql/v2 \
             -H "Authorization: Bearer ${{ secrets.RAILWAY_TOKEN }}" \
             -H "Content-Type: application/json" \
-            -d '{"query":"mutation { serviceInstanceRedeploy(environmentId: \"4a36bebe-1857-466f-b597-c6be3c43870a\", serviceId: \"1db37d19-c1a4-4145-ba84-f30a7c86219a\") }"}'
+            -d "{\"query\":\"mutation { environmentTriggersDeploy(input: { environmentId: \\\"4a36bebe-1857-466f-b597-c6be3c43870a\\\", projectId: \\\"$PROJECT_ID\\\", serviceId: \\\"1db37d19-c1a4-4145-ba84-f30a7c86219a\\\" }) }\"}")
+          echo "Deploy response: $DEPLOY_RESPONSE"
