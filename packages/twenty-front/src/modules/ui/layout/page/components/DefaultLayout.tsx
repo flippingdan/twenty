@@ -10,7 +10,7 @@ import { AppNavigationDrawer } from '@/navigation/components/AppNavigationDrawer
 import { MobileNavigationBar } from '@/navigation/components/MobileNavigationBar';
 import { PageDragDropProvider } from '@/navigation-menu-item/display/dnd/providers/PageDragDropProvider';
 import { BackgroundMockNavigationDrawer } from '@/sign-in-background-mock/components/BackgroundMockNavigationDrawer';
-import { Suspense, lazy } from 'react';
+import { type CSSProperties, Suspense, lazy } from 'react';
 
 const BackgroundMockPage = lazy(() =>
   import('@/sign-in-background-mock/components/BackgroundMockPage').then(
@@ -47,7 +47,7 @@ const StyledPageContainer = styled.div`
   min-width: 0;
 `;
 
-const SIDEBAR_CSS_VARS: React.CSSProperties = {
+const SIDEBAR_CSS_VARS: CSSProperties = {
   flexShrink: 0,
   background: '#2A2A2A',
   '--t-font-color-primary': '#E8E0D4',
