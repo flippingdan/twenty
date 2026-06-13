@@ -93,7 +93,6 @@ FROM node:24.16.0-alpine3.23@sha256:2bdb65ed1dab192432bc31c95f94155ca5ad7fc1392f
 # libs, so the upgrade hardens runtime TLS and clears the scanner.
 RUN apk add --no-cache \
     curl \
-    libnghttp2 \
     libcrypto3 \
     libssl3 \
     postgresql18-client \

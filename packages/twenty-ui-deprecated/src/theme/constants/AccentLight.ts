@@ -1,13 +1,12 @@
 import * as RadixColors from '@radix-ui/colors';
-import { COLOR_LIGHT } from '@ui/theme/constants/ColorsLight';
 
 export const ACCENT_LIGHT = {
-  primary: COLOR_LIGHT.ruby5,
-  secondary: COLOR_LIGHT.ruby5,
-  tertiary: COLOR_LIGHT.ruby3,
-  quaternary: COLOR_LIGHT.ruby2,
-  accent3570: COLOR_LIGHT.ruby8,
-  accent4060: COLOR_LIGHT.ruby8,
+  primary: RadixColors.rubyP3.ruby5,
+  secondary: RadixColors.rubyP3.ruby5,
+  tertiary: RadixColors.rubyP3.ruby3,
+  quaternary: RadixColors.rubyP3.ruby2,
+  accent3570: RadixColors.rubyP3.ruby8,
+  accent4060: RadixColors.rubyP3.ruby8,
   accent1: RadixColors.rubyP3.ruby1,
   accent2: RadixColors.rubyP3.ruby2,
   accent3: RadixColors.rubyP3.ruby3,
