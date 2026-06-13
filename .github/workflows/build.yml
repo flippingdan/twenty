@@ -25,5 +25,6 @@ jobs:
         with:
           context: .
           file: packages/twenty-docker/twenty/Dockerfile
+          target: twenty
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/twenty:latest
