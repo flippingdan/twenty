@@ -50,18 +50,21 @@ const StyledPageContainer = styled.div`
 const StyledNavigationDrawerWrapper = styled.div`
   flex-shrink: 0;
   background: #2A2A2A;
-  --t-font-color-primary: #E8E0D4;
-  --t-font-color-secondary: #C4B8A8;
-  --t-font-color-tertiary: rgba(196, 184, 168, 0.6);
-  --t-font-color-light: rgba(196, 184, 168, 0.4);
-  --t-font-color-extra-light: rgba(196, 184, 168, 0.25);
-  --t-background-transparent-light: rgba(255, 255, 255, 0.08);
-  --t-background-transparent-lighter: rgba(255, 255, 255, 0.04);
-  --t-background-tertiary: rgba(255, 255, 255, 0.12);
-  --t-border-color-medium: rgba(255, 255, 255, 0.12);
-  --t-border-color-strong: rgba(255, 255, 255, 0.2);
-  --t-border-color-light: rgba(255, 255, 255, 0.06);
 `;
+
+const SIDEBAR_CSS_VARS = {
+  '--t-font-color-primary': '#E8E0D4',
+  '--t-font-color-secondary': '#C4B8A8',
+  '--t-font-color-tertiary': 'rgba(196, 184, 168, 0.6)',
+  '--t-font-color-light': 'rgba(196, 184, 168, 0.4)',
+  '--t-font-color-extra-light': 'rgba(196, 184, 168, 0.25)',
+  '--t-background-transparent-light': 'rgba(255, 255, 255, 0.08)',
+  '--t-background-transparent-lighter': 'rgba(255, 255, 255, 0.04)',
+  '--t-background-tertiary': 'rgba(255, 255, 255, 0.12)',
+  '--t-border-color-medium': 'rgba(255, 255, 255, 0.12)',
+  '--t-border-color-strong': 'rgba(255, 255, 255, 0.2)',
+  '--t-border-color-light': 'rgba(255, 255, 255, 0.06)',
+} as React.CSSProperties;
 
 const StyledMainContainer = styled.div`
   display: flex;
@@ -86,11 +89,11 @@ export const DefaultLayout = () => {
               <PageDragDropProvider>
                 {!showAuthModal && <KeyboardShortcutMenu />}
                 {showAuthModal ? (
-                  <StyledNavigationDrawerWrapper>
+                  <StyledNavigationDrawerWrapper style={SIDEBAR_CSS_VARS}>
                     <BackgroundMockNavigationDrawer />
                   </StyledNavigationDrawerWrapper>
                 ) : useShowFullScreen ? null : (
-                  <StyledNavigationDrawerWrapper>
+                  <StyledNavigationDrawerWrapper style={SIDEBAR_CSS_VARS}>
                     <AppNavigationDrawer />
                   </StyledNavigationDrawerWrapper>
                 )}
